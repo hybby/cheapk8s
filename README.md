@@ -1,4 +1,4 @@
-# cheapk8s
+# cheapk8s - Kubernetes The Cheap Way
 ## Overview
 This repository serves as a reference to setting up a Kubernetes cluster on
 your laptop suitable for using to complete the labs outlined in **Kubernetes
