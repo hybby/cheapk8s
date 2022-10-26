@@ -46,17 +46,17 @@ the things included in this repository to stand up a Kubernetes cluster.
 1. Enable [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) and install Ubuntu.
 2. Install [VirtualBox](https://download.virtualbox.org) for Windows.
 3. Install [Vagrant](https://www.vagrantup.com/) via WSL (`apt-get install vagrant`)
-4. Create a `Vagrant` directory in your Windows user's documents area to use as a synced folder (i.e. `/mnt/c/Users/drew/Vagrant`). Must be outside of WSL.
-5. Configure [Vagrant to use WSL](https://www.vagrantup.com/docs/other/wsl)
-6. Configure your `~/.bashrc` or `~/.zshrc` with `VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"` to allow WSL Vagrant to work with Windows VirtualBox
-7. Configure your `PATH` in `~/.bashrc` or `~/.zshrc` to include the Virtualbox binaries directory (e.g. `PATH="$PATH:/mnt/c/Program Files/Oracle/VirtualBox"`) for easy access to `VBox*.exe` binaries
+4. Configure [Vagrant to use WSL](https://www.vagrantup.com/docs/other/wsl)
+5. Configure your `~/.bashrc` or `~/.zshrc` with `VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"` to allow WSL Vagrant to work with Windows VirtualBox
+6. Configure your `PATH` in `~/.bashrc` or `~/.zshrc` to include the Virtualbox binaries directory (e.g. `PATH="$PATH:/mnt/c/Program Files/Oracle/VirtualBox"`) for easy access to `VBox*.exe` binaries
+7. Make sure you're not connected to a work VPN or similar.
 
 You should be good to go now!
 
 ### Launching the VMs
 From this directory, simply run `vagrant up`.
 
-This will create 3 completely bare Ubuntu 20.04 servers that you can access 
+This will create 3 completely bare Ubuntu 20.04 servers that you can access
 with `vagrant ssh <cp|wrk1|wrk2>`, etc.
 
 It'll take a little while (15 minutes or so) as launching each box patches
@@ -111,7 +111,7 @@ Turn off the firewall and AppArmor. It's cool, we're learning.
 sudo ufw disable
 sudo ufw status
 
-sudo systemctl stop apparmor 
+sudo systemctl stop apparmor
 sudo systemctl disable apparmor
 ```
 
@@ -179,7 +179,7 @@ echo 10.0.0.177 wrk2 wrk2.example.com | sudo tee -a /etc/hosts
 Now create a Kubernetes cluster configuration. Custom as we've got multiple IPs
 
 ```
-cat << EOF | tee kubeadm-config.yaml
+cat << EOF | sudo tee kubeadm-config.yaml
 apiVersion: kubeadm.k8s.io/v1beta3
 kind: ClusterConfiguration
 kubernetesVersion: 1.23.1
@@ -200,7 +200,7 @@ Initialise the control plane.
 ```
 sudo kubeadm init --config=kubeadm-config.yaml \
     --upload-certs \
-    | tee kubeadm-init.out
+    | sudo tee kubeadm-init.out
 ```
 
 Configure `kubectl`.

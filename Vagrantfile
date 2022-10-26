@@ -3,18 +3,17 @@
 
 # Drew's note: This is a Vagrantfile used to stand up a Kubernetes cluster for
 # local experimentation and learning. To find out more, see this repository:
-# 
+#
 # https://github.com/hybby/cheapk8s
 
 # -----------------------------------------------------
 # CUSTOMISE THE BELOW IF REQUIRED
 # -----------------------------------------------------
 windows_username = `powershell.exe '$env:UserName'`.strip
-syncdir = "/mnt/c/Users/#{windows_username}/Vagrant"  # Must be a dir outside of WSL.
 
 box = "ubuntu/focal64"  # CKE says Ubuntu 20.04, so who am I to argue?
 cpus = "2"
-memory = "2048" 
+memory = "2048"
 
 cp_ip_addr = "10.0.0.175"
 wrk1_ip_addr = "10.0.0.176"
@@ -28,7 +27,8 @@ wrk2_ip_addr = "10.0.0.177"
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
-  config.vm.synced_folder syncdir, '/vagrant', disabled: false
+  config.vm.boot_timeout = 900
+  config.vm.synced_folder '.', '/vagrant', disabled: true
 
   config.vm.provider "virtualbox" do |vb|
     vb.memory = memory
