@@ -376,7 +376,7 @@ sudo kubeadm join \
 
 Now, **on the Control Plane** you should see the worker node has joined and is Ready.
 
-It will take about 2 minues to transition from `NotReady` to `Ready`.
+It will take about 5 minues to transition from `NotReady` to `Ready`.
 
 Now's a good time to make sure that second worker node is also configured correctly.
 
