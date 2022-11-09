@@ -43,7 +43,7 @@ If you have different requirements, adjust the Vagrantfile accordingly. YMMV.
 These are things you need to have installed and configured before you can use
 the things included in this repository to stand up a Kubernetes cluster.
 
-1. Enable [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) and install Ubuntu.
+1. Enable [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) and install Ubuntu (use WSL1, see below).
 2. Install [VirtualBox](https://download.virtualbox.org) for Windows.
 3. Install [Vagrant](https://www.vagrantup.com/) via WSL (`apt-get install vagrant`)
 4. Configure [Vagrant to use WSL](https://www.vagrantup.com/docs/other/wsl)
@@ -53,13 +53,26 @@ the things included in this repository to stand up a Kubernetes cluster.
 
 You should be good to go now!
 
+#### Note About WSL2
+I have seen performance issues starting VirtualBox VMs under Vagrant on WSL2, such that it is unusable.
+
+WSL1 seemed to be much more performant. VirtualBox VMs under WSL2 always used software-virtualisation and as such were dog slow.
+
+The [Internet says](https://www.reddit.com/r/vagrant/comments/sndv7q/vagrant_wsl2_hyperv) that this is because of HyperV's involvement in WSL2 getting in the way of VirtualBox's virtualisation, which makes sense.
+
+I ended up completely uninstalling WSL2 and reinstalling WSL1, then everything was _much better_.
+
+At any rate, getting the tools working is outside of the scope of this repo, but I wanted to let you know of my experiences.
+
+I found [this answer](https://stackoverflow.com/a/69896662) on StackOverflow to be very helpful at explaining everything.
+
 ### Launching the VMs
 From this directory, simply run `vagrant up`.
 
 This will create 3 completely bare Ubuntu 20.04 servers that you can access
 with `vagrant ssh <cp|wrk1|wrk2>`, etc.
 
-It'll take a little while (15 minutes or so) as launching each box patches
+It'll take a little while (10/15 minutes or so) as launching each box patches
 some operating system packages and salso installs the VBoxGuestAdditions.
 
 Now you can move onto the steps for configuring the control planes and workers.

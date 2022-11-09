@@ -9,8 +9,6 @@
 # -----------------------------------------------------
 # CUSTOMISE THE BELOW IF REQUIRED
 # -----------------------------------------------------
-windows_username = `powershell.exe '$env:UserName'`.strip
-
 box = "ubuntu/focal64"  # CKE says Ubuntu 20.04, so who am I to argue?
 cpus = "2"
 memory = "2048"
