@@ -16,6 +16,12 @@ memory = "2048"
 cp_ip_addr = "10.0.0.175"
 wrk1_ip_addr = "10.0.0.176"
 wrk2_ip_addr = "10.0.0.177"
+
+# chapter 16 - extra nodes - uncomment when needed (chapter 16)
+# lb_ip_addr = "10.0.0.180"
+# cp2_ip_addr = "10.0.0.181"
+# cp3_ip_addr = "10.0.0.182"
+
 # ------------------
 # END CUSTOMISATIONS
 # ------------------
@@ -48,6 +54,50 @@ Vagrant.configure("2") do |config|
       echo "this is my kubernetes controlplane"
     SHELL
   end
+
+  # more controlplanes and an haproxy node - uncomment when needed (chapter 16)
+  #config.vm.define "cp2" do |server|
+  #  server.vm.box = box
+  #  server.vm.hostname = "cp2.example.com"
+  #  server.vm.post_up_message = "cp2 is up"
+  #  server.vm.network :private_network, ip: cp2_ip_addr
+
+  #  # kubernetes api server port
+  #  server.vm.network "forwarded_port", guest: 6443, host: 6444
+
+  #  server.vm.provision "shell", inline: <<-SHELL
+  #    echo "this is my kubernetes controlplane 2"
+  #  SHELL
+  #end
+
+  #config.vm.define "cp3" do |server|
+  #  server.vm.box = box
+  #  server.vm.hostname = "cp3.example.com"
+  #  server.vm.post_up_message = "cp3 is up"
+  #  server.vm.network :private_network, ip: cp3_ip_addr
+
+  #  # kubernetes api server port
+  #  server.vm.network "forwarded_port", guest: 6443, host: 6445
+
+  #  server.vm.provision "shell", inline: <<-SHELL
+  #    echo "this is my kubernetes controlplane 3"
+  #  SHELL
+  #end
+
+  #config.vm.define "lb" do |server|
+  #  server.vm.box = box
+  #  server.vm.hostname = "lb.example.com"
+  #  server.vm.post_up_message = "lb is up"
+  #  server.vm.network :private_network, ip: lb_ip_addr
+
+  #  # kubernetes api server port
+  #  server.vm.network "forwarded_port", guest: 9443, host: 9443
+  #  server.vm.network "forwarded_port", guest: 9999, host: 9999
+
+  #  server.vm.provision "shell", inline: <<-SHELL
+  #    echo "this is my kubernetes load balancer"
+  #  SHELL
+  #end
 
   # workers
   config.vm.define "wrk1" do |server|
